@@ -14,7 +14,10 @@ type alias Model =
   { cells: List Cell }
 
 initialModel =
-  { cells = [(0, 0), (0, 1), (0, 2)] }
+  { cells = [
+    (0, 0), (1, 0), (2, 0),
+    (-1, -1), (0, -1), (1, -1)
+  ] }
 
 topForCell: Cell -> String
 topForCell cell =
@@ -32,13 +35,13 @@ mainLeftMargin : List Cell -> String
 mainLeftMargin cells =
   case minimumCoordinates cells of
     (x, _) ->
-      String.append (toString (abs (x * 50))) "px"
+      String.append (toString (50 + (abs (x * 50)))) "px"
 
 mainTopMargin : List Cell -> String
 mainTopMargin cells =
   case minimumCoordinates cells of
     (_, y) ->
-      String.append (toString (abs (y * 50))) "px"
+      String.append (toString (50 + (abs (y * 50)))) "px"
 
 styleForCell : Cell -> Attribute
 styleForCell cell =
@@ -75,7 +78,7 @@ view address model =
   div
     [ style [("margin", "50px auto")] ]
     [
-      text "Game Of Life",
+      h1 [] [ text "Elm Game Of Life" ],
       button [ onClick address Tick ] [ text "Tick" ],
       renderBoard model.cells
     ]
@@ -85,5 +88,5 @@ type Action = Tick
 update : Action -> Model -> Model
 update action model =
   case action of
-    Tick -> { model | cells <- (log "cells" (tick model.cells)) }
+    Tick -> { model | cells <- tick model.cells }
 
