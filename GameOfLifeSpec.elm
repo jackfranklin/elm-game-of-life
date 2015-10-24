@@ -10,6 +10,7 @@ import GameOfLife exposing (cellNextToOther)
 import CellNextToOtherSpec
 import NeighboursForCellSpec
 import ShouldDieSpec
+import ShouldComeToLifeSpec
 
 tests : Test
 tests =
@@ -17,7 +18,8 @@ tests =
       [
         CellNextToOtherSpec.tests,
         NeighboursForCellSpec.tests,
-        ShouldDieSpec.tests
+        ShouldDieSpec.tests,
+        ShouldComeToLifeSpec.tests
       ]
 
 
