@@ -83,6 +83,11 @@ view address model =
       renderBoard model.cells
     ]
 
+-- TODO: to generate a proper board
+-- xVals = [-4..2]
+-- yVals = [-3..5]
+
+-- List.concatMap (\x -> (List.map (\y -> (x, y)) yVals)) xVals
 type Action = Tick
 
 update : Action -> Model -> Model
