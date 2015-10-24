@@ -1,19 +1,10 @@
 module GameOfLife where
 
 import Maybe exposing (Maybe(..))
-import Debug exposing (log)
 
 import Set
 
 type alias Cell = (Int, Int)
-
-myLog: String -> a -> a
-myLog taggedString thing =
-  let
-    stringThing = (toString thing)
-  in
-   case (log taggedString stringThing) of
-     _ -> thing
 
 cellNextToOther: Cell -> Cell -> Bool
 cellNextToOther cellOne cellTwo =
@@ -30,8 +21,8 @@ neighboursForCell: Cell -> List Cell -> List Cell
 neighboursForCell cell cells =
   List.filter (cellNextToOther cell) cells
 
-neighbouringCellsForCell: Cell -> List Cell
-neighbouringCellsForCell cell =
+potentialNeighbouringCellsForCell: Cell -> List Cell
+potentialNeighbouringCellsForCell cell =
   case cell of
     (x, y) ->
       [(x - 1, y - 1),
@@ -100,16 +91,18 @@ processCell cell cells =
 
 reincarnateDeadNeighours: Cell -> List Cell -> List Cell
 reincarnateDeadNeighours cell cells =
-  (neighbouringCellsForCell cell)
+  (potentialNeighbouringCellsForCell cell)
     |> List.filter (\cell -> (shouldComeToLife cell cells))
+
+listUniq: List comparable -> List comparable
+listUniq list =
+  list |> Set.fromList |> Set.toList
 
 bringBackDeadCells: List Cell -> List Cell
 bringBackDeadCells cells =
   cells
-    |> List.map (\c -> (reincarnateDeadNeighours c cells))
-    |> List.concat
-    |> Set.fromList
-    |> Set.toList
+    |> List.concatMap (\c -> (reincarnateDeadNeighours c cells))
+    |> listUniq
 
 getNewLiveCells: List Cell -> List Cell
 getNewLiveCells cells =
