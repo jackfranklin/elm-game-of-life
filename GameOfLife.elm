@@ -17,6 +17,11 @@ neighboursForCell: Cell -> List Cell -> List Cell
 neighboursForCell cell cells =
   List.filter (cellNextToOther cell) cells
 
--- shouldDie: Cell -> Bool
--- shouldDie cell =
+shouldDie: Cell -> List Cell -> Bool
+shouldDie cell cells =
+  case List.length (neighboursForCell cell cells) of
+    2 -> False
+    3 -> False
+    _ -> True
+
 
