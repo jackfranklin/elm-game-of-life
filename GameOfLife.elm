@@ -35,5 +35,22 @@ shouldComeToLife cell cells =
         _ -> False
 
 
+minOrMaxCoordinates: List Cell -> (List comparable -> Maybe comparable) -> Cell
+minOrMaxCoordinates cells f =
+  (
+    Maybe.withDefault 0 (f (fst (List.unzip cells))),
+    Maybe.withDefault 0 (f (snd (List.unzip cells)))
+  )
+
+
+minimumCoordinates: List Cell -> Cell
+minimumCoordinates cells =
+  minOrMaxCoordinates cells List.minimum
+
+maximumCoordinates: List Cell -> Cell
+maximumCoordinates cells =
+  minOrMaxCoordinates cells List.maximum
+
+
 
 

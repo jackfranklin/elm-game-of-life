@@ -11,6 +11,7 @@ import CellNextToOtherSpec
 import NeighboursForCellSpec
 import ShouldDieSpec
 import ShouldComeToLifeSpec
+import CoordinatesSpec
 
 tests : Test
 tests =
@@ -19,7 +20,8 @@ tests =
         CellNextToOtherSpec.tests,
         NeighboursForCellSpec.tests,
         ShouldDieSpec.tests,
-        ShouldComeToLifeSpec.tests
+        ShouldComeToLifeSpec.tests,
+        CoordinatesSpec.tests
       ]
 
 
