@@ -5,13 +5,12 @@ import ElmTest.Test exposing (test, Test, suite)
 import ElmTest.Assertion exposing (assert, assertEqual)
 import ElmTest.Runner.Element exposing (runDisplay)
 
-import GameOfLife exposing (cellNextToOther)
-
 import CellNextToOtherSpec
 import NeighboursForCellSpec
 import ShouldDieSpec
 import ShouldComeToLifeSpec
 import CoordinatesSpec
+import TickSpec
 
 tests : Test
 tests =
@@ -21,7 +20,8 @@ tests =
         NeighboursForCellSpec.tests,
         ShouldDieSpec.tests,
         ShouldComeToLifeSpec.tests,
-        CoordinatesSpec.tests
+        CoordinatesSpec.tests,
+        TickSpec.tests
       ]
 
 
