@@ -29,7 +29,7 @@ generateGrid xValues yValues =
         (minY, maxY) ->
           List.concatMap (
             \x -> (List.map (\y -> (x, y))) [minY..maxY]
-          ) [minX..maxY]
+          ) [minX..maxX]
 
 potentialNeighbouringCellsForCell: Cell -> List Cell
 potentialNeighbouringCellsForCell cell =
