@@ -23,7 +23,7 @@ topForCell: Cell -> String
 topForCell cell =
   case cell of
     (_, y) ->
-      String.append (toString (y * 50)) "px"
+      String.append (toString (y * -1 * 50)) "px"
 
 leftForCell: Cell -> String
 leftForCell cell =
@@ -35,13 +35,13 @@ mainLeftMargin : List Cell -> String
 mainLeftMargin cells =
   case minimumCoordinates cells of
     (x, _) ->
-      String.append (toString (50 + (abs (x * 50)))) "px"
+      String.append (toString (100 + (abs (x * 50)))) "px"
 
 mainTopMargin : List Cell -> String
 mainTopMargin cells =
   case minimumCoordinates cells of
     (_, y) ->
-      String.append (toString (50 + (abs (y * 50)))) "px"
+      String.append (toString (100 + (abs (y * 50)))) "px"
 
 styleForCell : Cell -> Attribute
 styleForCell cell =
@@ -56,11 +56,7 @@ styleForCell cell =
 
 cellToListItem : Cell -> Html
 cellToListItem cell =
-  li
-    [ styleForCell cell ]
-    [
-      text ""
-    ]
+  li [ styleForCell cell ] []
 
 renderBoard : List Cell -> Html
 renderBoard cells =
@@ -76,7 +72,7 @@ renderBoard cells =
 view : Signal.Address Action -> Model -> Html
 view address model =
   div
-    [ style [("margin", "50px auto")] ]
+    [ style [("margin", "50px 0 0 50px")] ]
     [
       h1 [] [ text "Elm Game Of Life" ],
       button [ onClick address Tick ] [ text "Tick" ],

@@ -2,4 +2,18 @@
 
 Part of my efforts to learn Elm.
 
-No HTML interface for now, but you can fire up `elm reactor` and visit http://localhost:8000/GameOfLifeSpec.elm to see all the tests pass.
+# Viewing the App
+
+```
+elm reactor
+```
+
+Visit http://localhost:8000/App.elm
+
+# Tests
+
+```
+elm reactor
+```
+
+Visit http://localhost:8000/GameOfLifeSpec.elm
