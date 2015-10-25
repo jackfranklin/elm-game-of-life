@@ -21,18 +21,24 @@ neighboursForCell: Cell -> List Cell -> List Cell
 neighboursForCell cell cells =
   List.filter (cellNextToOther cell) cells
 
+generateGrid: Cell -> Cell -> List Cell
+generateGrid xValues yValues =
+  case xValues of
+    (minX, maxX) ->
+      case yValues of
+        (minY, maxY) ->
+          List.concatMap (
+            \x -> (List.map (\y -> (x, y))) [minY..maxY]
+          ) [minX..maxY]
+
 potentialNeighbouringCellsForCell: Cell -> List Cell
 potentialNeighbouringCellsForCell cell =
-  case cell of
-    (x, y) ->
-      [(x - 1, y - 1),
-       (x - 1, y),
-       (x - 1, y + 1),
-       (x, y - 1),
-       (x, y + 1),
-       (x + 1, y - 1),
-       (x + 1, y),
-       (x + 1, y + 1)]
+  let
+    cellX = fst cell
+    cellY = snd cell
+    grid = generateGrid (cellX - 1, cellX + 1) (cellY - 1, cellY + 1)
+  in
+    List.filter (\newCell -> newCell /= cell) grid
 
 
 shouldDie: Cell -> List Cell -> Bool

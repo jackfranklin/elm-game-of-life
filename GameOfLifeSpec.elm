@@ -11,6 +11,7 @@ import ShouldDieSpec
 import ShouldComeToLifeSpec
 import CoordinatesSpec
 import TickSpec
+import PotentialNeighbouringCellsForCellSpec
 
 tests : Test
 tests =
@@ -21,7 +22,8 @@ tests =
         ShouldDieSpec.tests,
         ShouldComeToLifeSpec.tests,
         CoordinatesSpec.tests,
-        TickSpec.tests
+        TickSpec.tests,
+        PotentialNeighbouringCellsForCellSpec.tests
       ]
 
 
