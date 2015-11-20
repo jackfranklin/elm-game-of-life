@@ -2,7 +2,6 @@ import Html exposing (..)
 import Html.Events exposing (onClick)
 import Html.Attributes exposing (style, class)
 import StartApp.Simple as StartApp
-import ConsoleLog exposing (log)
 import String
 import GameOfLife exposing (Cell, tick, minimumCoordinates)
 
@@ -89,5 +88,5 @@ type Action = Tick
 update : Action -> Model -> Model
 update action model =
   case action of
-    Tick -> { model | cells <- tick model.cells }
+    Tick -> { model | cells = tick model.cells }
 

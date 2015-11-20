@@ -59,7 +59,7 @@ shouldComeToLife cell cells =
         _ -> False
 
 
-minOrMaxCoordinates: List Cell -> (List comparable -> Maybe comparable) -> Cell
+minOrMaxCoordinates: List Cell -> (List Int -> Maybe number) -> (number, number)
 minOrMaxCoordinates cells f =
   (
     Maybe.withDefault 0 (f (fst (List.unzip cells))),
