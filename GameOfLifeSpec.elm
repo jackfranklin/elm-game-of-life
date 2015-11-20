@@ -1,9 +1,7 @@
 import String
-import Graphics.Element exposing (Element)
+import Graphics.Element exposing (Element, show)
 
-import ElmTest.Test exposing (test, Test, suite)
-import ElmTest.Assertion exposing (assert, assertEqual)
-import ElmTest.Runner.Element exposing (runDisplay)
+import ElmTest exposing (..)
 
 import CellNextToOtherSpec
 import NeighboursForCellSpec
@@ -27,4 +25,6 @@ tests =
       ]
 
 
-main = runDisplay tests
+main : Element
+main =
+    show (stringRunner tests)

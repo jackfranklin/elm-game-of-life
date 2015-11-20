@@ -1,8 +1,7 @@
 module NeighboursForCellSpec where
 
 import String
-import ElmTest.Test exposing (test, Test, suite)
-import ElmTest.Assertion exposing (assert, assertEqual)
+import ElmTest exposing (..)
 
 import GameOfLife exposing (neighboursForCell)
 
