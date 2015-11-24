@@ -1,5 +1,5 @@
 import String
-import Graphics.Element exposing (Element, show)
+import Graphics.Element exposing (Element)
 
 import ElmTest exposing (..)
 
@@ -27,4 +27,4 @@ tests =
 
 main : Element
 main =
-    show (stringRunner tests)
+  elementRunner tests
