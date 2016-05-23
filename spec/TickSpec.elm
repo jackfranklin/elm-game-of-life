@@ -1,13 +1,18 @@
-module TickSpec where
+module TickSpec exposing (..)
 
 import String
 import ElmTest exposing (..)
-
 import Debug
 import GameOfLife exposing (tick)
 
-firstTestInput = [(0, 0), (0, 1), (0, 2)]
-firstTestOutput = [(0, 1), (-1, 1), (1, 1)]
+
+firstTestInput =
+    [ ( 0, 0 ), ( 0, 1 ), ( 0, 2 ) ]
+
+
+firstTestOutput =
+    [ ( 0, 1 ), ( -1, 1 ), ( 1, 1 ) ]
+
 
 tests : Test
 tests =
