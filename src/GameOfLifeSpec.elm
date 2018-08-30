@@ -1,19 +1,19 @@
-module Main exposing (..)
+module Main exposing (main, tests)
 
-import String
-import ElmTest exposing (..)
 import CellNextToOtherSpec
-import NeighboursForCellSpec
-import ShouldDieSpec
-import ShouldComeToLifeSpec
 import CoordinatesSpec
-import TickSpec
+import NeighboursForCellSpec
 import PotentialNeighbouringCellsForCellSpec
+import ShouldComeToLifeSpec
+import ShouldDieSpec
+import String
+import Test exposing (..)
+import TickSpec
 
 
 tests : Test
 tests =
-    suite "GameOfLife"
+    describe "GameOfLife"
         [ CellNextToOtherSpec.tests
         , NeighboursForCellSpec.tests
         , ShouldDieSpec.tests

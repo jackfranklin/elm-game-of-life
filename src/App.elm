@@ -1,21 +1,22 @@
-module Main exposing (..)
+module Main exposing (Model, Msg(..), cellToListItem, initialModel, leftForCell, main, mainLeftMargin, mainTopMargin, renderBoard, styleForCell, topForCell, update, view)
 
+import Browser
+import GameOfLife exposing (Cell, minimumCoordinates, tick)
 import Html exposing (..)
+import Html.Attributes exposing (class, style)
 import Html.Events exposing (onClick)
-import Html.Attributes exposing (style, class)
-import Html.App as Html
 import String
-import GameOfLife exposing (Cell, tick, minimumCoordinates)
 
 
 main =
-    Html.beginnerProgram { model = initialModel, view = view, update = update }
+    Browser.sandbox { init = initialModel, view = view, update = update }
 
 
 type alias Model =
     { cells : List Cell }
 
 
+initialModel : Model
 initialModel =
     { cells =
         [ ( 0, 0 )
@@ -33,63 +34,60 @@ topForCell : Cell -> String
 topForCell cell =
     case cell of
         ( _, y ) ->
-            String.append (toString (y * -1 * 50)) "px"
+            String.append (String.fromInt (y * -1 * 50)) "px"
 
 
 leftForCell : Cell -> String
 leftForCell cell =
     case cell of
         ( x, _ ) ->
-            String.append (toString (x * 50)) "px"
+            String.append (String.fromInt (x * 50)) "px"
 
 
 mainLeftMargin : List Cell -> String
 mainLeftMargin cells =
     case minimumCoordinates cells of
         ( x, _ ) ->
-            String.append (toString (100 + (abs (x * 50)))) "px"
+            String.append (String.fromInt (100 + abs (x * 50))) "px"
 
 
 mainTopMargin : List Cell -> String
 mainTopMargin cells =
     case minimumCoordinates cells of
         ( _, y ) ->
-            String.append (toString (100 + (abs (y * 50)))) "px"
+            String.append (String.fromInt (100 + abs (y * 50))) "px"
 
 
-styleForCell : Cell -> Attribute msg
+styleForCell : Cell -> List (Attribute Msg)
 styleForCell cell =
-    style
-        [ ( "width", "20px" )
-        , ( "height", "20px" )
-        , ( "list-style", "none" )
-        , ( "top", topForCell cell )
-        , ( "left", leftForCell cell )
-        , ( "background", "red" )
-        , ( "position", "absolute" )
-        ]
+    [ style "width" "20px"
+    , style "height" "20px"
+    , style "list-style" "none"
+    , style "top" <| topForCell cell
+    , style "left" <| leftForCell cell
+    , style "background" "red"
+    , style "position" "absolute"
+    ]
 
 
 cellToListItem : Cell -> Html Msg
 cellToListItem cell =
-    li [ styleForCell cell ] []
+    li (styleForCell cell) []
 
 
 renderBoard : List Cell -> Html Msg
 renderBoard cells =
     ul
-        [ style
-            [ ( "margin-top", mainTopMargin cells )
-            , ( "margin-left", mainLeftMargin cells )
-            , ( "position", "relative" )
-            ]
+        [ style "margin-top" (mainTopMargin cells)
+        , style "margin-left" (mainLeftMargin cells)
+        , style "position" "relative"
         ]
         (List.map cellToListItem cells)
 
 
 view : Model -> Html Msg
 view model =
-    div [ style [ ( "margin", "50px 0 0 50px" ) ] ]
+    div [ style "margin" "50px 0 0 50px" ]
         [ h1 [] [ text "Elm Game Of Life" ]
         , button [ onClick Tick ] [ text "Tick" ]
         , renderBoard model.cells

@@ -1,4 +1,4 @@
-module GameOfLife exposing (..)
+module GameOfLife exposing (Cell, bringBackDeadCells, cellIsAlive, cellNextToOther, generateGrid, getNewLiveCells, isJustCell, isNothingCell, listUniq, maximumCoordinates, minOrMaxCoordinates, minimumCoordinates, neighboursForCell, potentialNeighbouringCellsForCell, processCell, reincarnateDeadNeighours, shouldComeToLife, shouldDie, tick)
 
 import Maybe exposing (Maybe(..))
 import Set
@@ -17,7 +17,7 @@ cellNextToOther cellOne cellTwo =
                     (abs (x1 - x2) <= 1)
                         && (abs (y1 - y2) <= 1)
                         && -- make sure that we're not dealing with the same cell twice
-                           (not (x1 == x2 && y1 == y2))
+                           not (x1 == x2 && y1 == y2)
 
 
 neighboursForCell : Cell -> List Cell -> List Cell
@@ -31,23 +31,23 @@ generateGrid xValues yValues =
         ( minX, maxX ) ->
             case yValues of
                 ( minY, maxY ) ->
-                    List.concatMap (\x -> (List.map (\y -> ( x, y ))) [minY..maxY])
-                        [minX..maxX]
+                    List.concatMap (\x -> List.map (\y -> ( x, y )) (List.range minY maxY))
+                        (List.range minX maxX)
 
 
 potentialNeighbouringCellsForCell : Cell -> List Cell
 potentialNeighbouringCellsForCell cell =
     let
         cellX =
-            fst cell
+            Tuple.first cell
 
         cellY =
-            snd cell
+            Tuple.second cell
 
         grid =
             generateGrid ( cellX - 1, cellX + 1 ) ( cellY - 1, cellY + 1 )
     in
-        List.filter (\newCell -> newCell /= cell) grid
+    List.filter (\newCell -> newCell /= cell) grid
 
 
 shouldDie : Cell -> List Cell -> Bool
@@ -81,8 +81,8 @@ shouldComeToLife cell cells =
 
 minOrMaxCoordinates : List Cell -> (List Int -> Maybe number) -> ( number, number )
 minOrMaxCoordinates cells f =
-    ( Maybe.withDefault 0 (f (fst (List.unzip cells)))
-    , Maybe.withDefault 0 (f (snd (List.unzip cells)))
+    ( Maybe.withDefault 0 (f (Tuple.first (List.unzip cells)))
+    , Maybe.withDefault 0 (f (Tuple.second (List.unzip cells)))
     )
 
 
@@ -113,7 +113,7 @@ isNothingCell cell =
 
 isJustCell : Maybe Cell -> Bool
 isJustCell cell =
-    (not (isNothingCell cell))
+    not (isNothingCell cell)
 
 
 processCell : Cell -> List Cell -> Maybe Cell
@@ -128,8 +128,8 @@ processCell cell cells =
 
 reincarnateDeadNeighours : Cell -> List Cell -> List Cell
 reincarnateDeadNeighours cell cells =
-    (potentialNeighbouringCellsForCell cell)
-        |> List.filter (\cell -> (shouldComeToLife cell cells))
+    potentialNeighbouringCellsForCell cell
+        |> List.filter (\someCell -> shouldComeToLife someCell cells)
 
 
 listUniq : List comparable -> List comparable
@@ -140,13 +140,13 @@ listUniq list =
 bringBackDeadCells : List Cell -> List Cell
 bringBackDeadCells cells =
     cells
-        |> List.concatMap (\c -> (reincarnateDeadNeighours c cells))
+        |> List.concatMap (\c -> reincarnateDeadNeighours c cells)
         |> listUniq
 
 
 getNewLiveCells : List Cell -> List Cell
 getNewLiveCells cells =
-    (List.filterMap (\cell -> (processCell cell cells)) cells)
+    List.filterMap (\cell -> processCell cell cells) cells
 
 
 tick : List Cell -> List Cell
